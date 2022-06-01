@@ -3,7 +3,7 @@ import pokemonService from './service';
 import { Pokemon } from './model';
 
 describe('PokemonService', () => {
-  beforeEach(() => {});
+  beforeEach(() => { });
 
   test('getAll', () => {
     expect(pokemonService.getAll().length).toEqual(pokemons.length);
@@ -31,6 +31,26 @@ describe('PokemonService', () => {
     expect(pokemons.length).toBe(10);
     pokemonService.create(data);
     expect(pokemons.length).toBe(11);
+  });
+
+  test('update pokemon happy path', () => {
+    const data = {
+      name: 'Samuel'
+    }
+
+    expect(pokemonService.getOne(2).name).toBe('Salamèche');
+
+    const updatedPokemon = pokemonService.update(2, data);
+    expect(updatedPokemon.name).toEqual('Samuel');
+  });
+
+  test('update pokemon sad path', () => {
+    const data = {
+      name: 'Wrong ID',
+    }
+    expect(() => {
+      pokemonService.update(100, data);
+    }).toThrowError('Could not update Pokemon');
   });
 
   test('delete pokemon happy path', () => {

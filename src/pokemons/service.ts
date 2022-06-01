@@ -23,6 +23,9 @@ export class PokemonService {
 
   update(id: number, data: Partial<Omit<Pokemon, 'id'>>) {
     const pokemonIndex = pokemons.findIndex((pokemon) => pokemon.id === id);
+    if (pokemonIndex < 0) {
+      throw Error('Could not update Pokemon');
+    }
     pokemons[pokemonIndex] = { ...pokemons[pokemonIndex], ...data };
 
     return pokemons[pokemonIndex];
